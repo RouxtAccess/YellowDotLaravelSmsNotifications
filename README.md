@@ -34,26 +34,34 @@ return [
 ];
 ```
 
-## Formatting SMS Notifications
+## Update Notifiable Model
 
-If a notification supports being sent as an SMS, you should define a `toSmsPortal` method on the notification class. This method will receive a `$notifiable` entity and should return a `Illuminate\Notifications\Messages\SMSPortalMessage` instance:
+If a notification supports being sent as an SMS, you should define a `toYellowDot` method on the notification class. This method will receive a `$notifiable` entity and should return a `RouxtAccess\YellowDotNotifications\YellowDotMessage` instance:
 
 ```php
-/**
- * Get the SMSPortal / SMS representation of the notification.
- *
- * @param  mixed  $notifiable
-    * @return SMSPortalMessage
-    */
-public function toSmsPortal($notifiable)
+
+public function toYellowDot($notifiable)
 {
-    return (new SMSPortalMessage)
+    return (new YellowDotMessage)
+                ->content('Your SMS message content');
+}
+```
+
+## Formatting SMS Notifications
+
+If a notification supports being sent as an SMS, you should define a `toYellowDot` method on the notification class. This method will receive a `$notifiable` entity and should return a `RouxtAccess\YellowDotNotifications\YellowDotMessage` instance:
+
+```php
+
+public function toYellowDot($notifiable)
+{
+    return (new YellowDotMessage)
                 ->content('Your SMS message content');
 }
 ```
 
 ## Adding as Delivery Channel
-Add the channel `smsportal` to the notification delivery channels.
+Add the channel `yellow_dot` to the notification delivery channels.
 
 ```php
 /**
@@ -64,7 +72,7 @@ Add the channel `smsportal` to the notification delivery channels.
  */
 public function via($notifiable)
 {
-    return ['mail', 'smsportal'];
+    return ['mail', 'yellow_dot'];
 }
 ```
 
