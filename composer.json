@@ -1,0 +1,38 @@
+{
+  "name": "rouxtaccess/yellowdot-notifications",
+  "description": "YellowDot Notification Channel for Laravel",
+  "keywords": ["laravel", "notifications", "YellowDot"],
+  "license": "MIT",
+  "authors": [{
+    "name": "John Roux",
+    "email": "john@rouxtaccess.com",
+    "role": "Developer"
+  }],
+  "require": {
+    "php" : ">=8.1",
+    "illuminate/config": ">=9.0",
+    "illuminate/notifications": ">=9.0",
+    "guzzlehttp/guzzle": ">=8.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "mockery/mockery": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "RouxtAccess\\YellowDotNotifications\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers" : [
+        "RouxtAccess\\YellowDotNotifications\\YellowDotServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
