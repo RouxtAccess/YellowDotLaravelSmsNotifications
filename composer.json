@@ -11,8 +11,7 @@
   "require": {
     "php" : ">=8.1",
     "illuminate/config": ">=9.0",
-    "illuminate/notifications": ">=9.0",
-    "guzzlehttp/guzzle": ">=8.0"
+    "illuminate/notifications": ">=9.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",

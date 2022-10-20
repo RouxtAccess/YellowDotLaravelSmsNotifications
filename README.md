@@ -12,7 +12,7 @@ Laravel 9+
 Install the package :) 
 
 ```bash
-composer require rouxtaccess/laravel-yellowdot
+composer require rouxtaccess/yellowdot-notifications
 ```
 
 The package will automatically register itself.
@@ -20,24 +20,44 @@ The package will automatically register itself.
 You can publish the migration with:
 
 ```bash
-php artisan vendor:publish --provider="Illuminate\Notifications\SMSPortalServiceProvider"
+php artisan vendor:publish --provider="RouxtAccess\YellowDotNotifications\YellowDotServiceProvider"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
-    'client_id' => env('SMS_PORTAL_CLIENT_ID'),
-    'secret' => env('SMS_PORTAL_SECRET'),
-    'base_uri' => env('SMS_PORTAL_URL', 'https://rest.smsportal.com/v1/'),
-    'delivery_enabled' => env('SMS_PORTAL_DELIVERY_ENABLED', true),
+    'api' => [
+        'host' => env('YELLOW_DOT_HOST', 'https://api.ydplatform.com/api/'),
+        'password' => env('YELLOW_DOT_PASSWORD', ),
+    ],
+    'sms' => [
+        'delivery_enabled' => env('YELLOW_DOT_SMS_DELIVERY_ENABLED', false),
+        'delivery_reports' => [
+            'enabled' => env('YELLOW_DOT_SMS_DELIVERY_REPORTS_ENABLED', false),
+        ],
+    ],
 ];
 ```
 
 ## Update Notifiable Model
 
-If a notification supports being sent as an SMS, you should define a `toYellowDot` method on the notification class. This method will receive a `$notifiable` entity and should return a `RouxtAccess\YellowDotNotifications\YellowDotMessage` instance:
+If a notification supports being sent as an SMS, you should define a `routeNotificationForYellowDot` method on the notification class. This method will receive a `$notifiable` entity and should return a `RouxtAccess\YellowDotNotifications\YellowDotMessage` instance:
+public function routeNotificationForYellowDot($notification)
+{
+if($this->is_for_me)
+{
+return [
+'to' => $this->gifter->msisdn,
+'service_id' => config('yellowdot.subscriptions')[User::SUBSCRIPTION_DAILY],
+];
+}
+return [
+'to' => $this->recipient_msisdn,
+'service_id' => config('yellowdot.subscriptions')[User::SUBSCRIPTION_DAILY],
+];
 
+    }
 ```php
 
 public function toYellowDot($notifiable)

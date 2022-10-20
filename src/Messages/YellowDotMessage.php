@@ -1,6 +1,6 @@
 <?php
 
-namespace RouxtAccess\YellowDotNotifications;
+namespace RouxtAccess\YellowDotNotifications\Messages;
 
 class YellowDotMessage
 {

@@ -4,7 +4,7 @@ namespace RouxtAccess\YellowDotNotifications;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Notification;
-use RouxtAccess\YellowDotNotifications\Services\YellowDotNotificationService;
+use RouxtAccess\YellowDotNotifications\Channels\YellowDotChannel;
 
 class YellowDotServiceProvider extends ServiceProvider
 {
@@ -23,7 +23,7 @@ class YellowDotServiceProvider extends ServiceProvider
     public function register()
     {
         Notification::extend('yellow_dot', function ($app) {
-            return new YellowDotNotificationService();
+            return new YellowDotChannel();
         });
     }
 }

@@ -25,16 +25,16 @@ class YellowDotNotificationService
         $this->host = $host ?? config('yellowdot.api.host');
     }
 
-    public function send(YellowDotSmsPayloadDto $payloadDto) : object
+    public function send(string $msisdn, string $serviceId, string $message, string $transactionId) : object
     {
         $endpoint = 'SendSMS';
         $payload = [
-            'MSISDN' => $payloadDto->msisdn,
-            'ServiceID' => $payloadDto->serviceId,
-            'Text' => $payloadDto->text,
-            'TransactionID' => $payloadDto->transactionId,
+            'MSISDN' => $msisdn,
+            'ServiceID' => $serviceId,
+            'Text' => $message,
+            'TransactionID' => $transactionId,
         ];
-
+        Log::info('YellowDotNotificationService - Sending SMS', ['payload' => $payload]);
         return $this->post($endpoint, $payload);
     }
 

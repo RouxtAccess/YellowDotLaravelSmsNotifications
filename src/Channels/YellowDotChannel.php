@@ -2,15 +2,10 @@
 
 namespace RouxtAccess\YellowDotNotifications\Channels;
 
-use Carbon\Carbon;
-use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Str;
-use NeoLikotsi\SMSPortal\RestClient;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Notifications\Notification;
-use RouxtAccess\YellowDotNotifications\Dto\YellowDotSmsPayloadDto;
+use RouxtAccess\YellowDotNotifications\Messages\YellowDotMessage;
 use RouxtAccess\YellowDotNotifications\Services\YellowDotNotificationService;
-use RouxtAccess\YellowDotNotifications\YellowDotMessage;
 use SayThanks\Electronicline\Exceptions\YellowDotInvalidRouteException;
 
 class YellowDotChannel
@@ -59,12 +54,12 @@ class YellowDotChannel
         }
 
         $transactionId = Str::uuid();
-        $response = $this->notificationService->send(new YellowDotSmsPayloadDto(
+        $response = $this->notificationService->send(
             msisdn: $data['to'],
             serviceId: $data['service_id'],
-            text: $message->getContent(),
+            message: $message->getContent(),
             transactionId: $transactionId,
-        ));
+        );
 
         if($this->deliveryReportsEnabled){
             // ToDo - Store token to match with delivery report and $transactionId
